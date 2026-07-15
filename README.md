@@ -4,6 +4,9 @@ A practitioner-facing HonoX application that uses HAPI FHIR Clinical Reasoning
 to evaluate a hypertension blood-pressure documentation rule and presents the
 result through a CDS Hooks `patient-view` workflow.
 
+The application is built and served directly by Bun using Hono's Web Standard
+`fetch` interface; it does not require a Node HTTP server adapter.
+
 ## Architecture
 
 ```text
