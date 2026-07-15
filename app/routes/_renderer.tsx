@@ -13,15 +13,7 @@ export default jsxRenderer(({ children, title }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{pageTitle}</title>
         <link rel="icon" href="/favicon.ico" />
-        <Link
-          href="/app/style.css"
-          rel="preload"
-          as="style"
-          onload="this.onload=null;this.rel='stylesheet'"
-        />
-        <noscript>
-          <Link href="/app/style.css" rel="stylesheet" />
-        </noscript>
+        <Link href="/app/style.css" rel="stylesheet" />
         <script
           src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js"
           integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V"

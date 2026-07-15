@@ -2,6 +2,7 @@
   "name": "practitioner-fhir-clinical-reasoning-demo",
   "type": "module",
   "private": true,
+  "packageManager": "bun@1.3.14",
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 5174 --strictPort",
     "dev:hapi-proxy": "fly proxy 18080:8080 -a practitioner-hapi-fhir",
