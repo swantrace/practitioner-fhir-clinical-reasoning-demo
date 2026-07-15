@@ -25,6 +25,9 @@ to cards.
 
 ## Local configuration
 
+The project and production image use Bun 1.3.14. Check `bun --version` and run
+`bun upgrade` if the local version is older.
+
 Copy `.env.example` to `.env` and point `FHIR_BASE_URL` at a HAPI FHIR R4 server
 with Clinical Reasoning enabled. `FHIR_BEARER_TOKEN` is optional for an
 unsecured local server and required when the remote server is protected.

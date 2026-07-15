@@ -9,7 +9,7 @@ const productionServerMiddleware = async (
 ) => {
   let code = `import { compress } from 'hono/compress'\n`;
   code += `import { serveStatic } from 'hono/bun'\n`;
-  code += `${appName}.use(compress())\n`;
+  code += `if (typeof CompressionStream !== 'undefined') ${appName}.use(compress())\n`;
 
   for (const path of options?.staticPaths ?? []) {
     code += `${appName}.use('${path}', serveStatic({ root: './' }))\n`;
@@ -29,7 +29,7 @@ export default defineConfig({
     }),
     tailwindcss(),
     build({
-      // Recreate the Bun adapter's static hook so compression wraps static assets too.
+      // Recreate the Bun adapter's static hook and compress when the runtime supports it.
       entryContentBeforeHooks: [productionServerMiddleware],
     }),
   ],
