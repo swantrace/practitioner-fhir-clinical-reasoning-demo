@@ -1,4 +1,4 @@
-import build from '@hono/vite-build/node';
+import build from '@hono/vite-build/bun';
 import tailwindcss from '@tailwindcss/vite';
 import honox from 'honox/vite';
 import { defineConfig } from 'vite';
@@ -8,7 +8,7 @@ const productionServerMiddleware = async (
   options?: { staticPaths?: string[] },
 ) => {
   let code = `import { compress } from 'hono/compress'\n`;
-  code += `import { serveStatic } from '@hono/node-server/serve-static'\n`;
+  code += `import { serveStatic } from 'hono/bun'\n`;
   code += `${appName}.use(compress())\n`;
 
   for (const path of options?.staticPaths ?? []) {
@@ -29,9 +29,7 @@ export default defineConfig({
     }),
     tailwindcss(),
     build({
-      port: 8080,
-      // The Node adapter's default hook serves static files before the app.
-      // Recreate it here so compression also wraps CSS, favicon, and other assets.
+      // Recreate the Bun adapter's static hook so compression wraps static assets too.
       entryContentBeforeHooks: [productionServerMiddleware],
     }),
   ],

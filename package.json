@@ -5,14 +5,13 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 5174 --strictPort",
     "build": "vite build --mode client && vite build",
-    "start": "cd dist && node index.js",
+    "start": "cd dist && bun run index.js",
     "test": "bun test tests/*.test.ts",
     "typecheck": "tsc --noEmit",
     "format": "biome check --linter-enabled=false .",
     "format:fix": "biome check --write --linter-enabled=false ."
   },
   "dependencies": {
-    "@hono/node-server": "^1.19.14",
     "hono": "^4.12.27",
     "honox": "0.1.58",
     "htmx.org": "^2.0.10"
