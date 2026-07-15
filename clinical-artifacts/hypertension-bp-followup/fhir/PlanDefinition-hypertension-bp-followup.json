@@ -1,0 +1,36 @@
+{
+  "resourceType": "PlanDefinition",
+  "id": "hypertension-bp-followup",
+  "url": "https://example.org/fhir/PlanDefinition/hypertension-bp-followup",
+  "version": "1.0.0",
+  "name": "HypertensionBloodPressureFollowup",
+  "title": "Hypertension Blood Pressure Follow-up",
+  "status": "active",
+  "experimental": true,
+  "type": {
+    "coding": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/plan-definition-type",
+        "code": "eca-rule"
+      }
+    ]
+  },
+  "library": [
+    "https://example.org/fhir/Library/HypertensionBpFollowup|1.0.0"
+  ],
+  "action": [
+    {
+      "title": "Record blood pressure",
+      "description": "Record a blood-pressure observation for this patient.",
+      "condition": [
+        {
+          "kind": "applicability",
+          "expression": {
+            "language": "text/cql-identifier",
+            "expression": "BloodPressureDocumentationMissing"
+          }
+        }
+      ]
+    }
+  ]
+}

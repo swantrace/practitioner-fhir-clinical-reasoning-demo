@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:h2:file:./target/database/h2}
+    username: ${SPRING_DATASOURCE_USERNAME:sa}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+
+hapi:
+  fhir:
+    fhir_version: R4
+    cr:
+      enabled: true
+    cdshooks:
+      enabled: false

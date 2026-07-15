@@ -1,0 +1,8 @@
+services:
+  hapi-fhir:
+    image: hapiproject/hapi:v8.8.0
+    environment:
+      hapi.fhir.fhir_version: R4
+      hapi.fhir.cr.enabled: "true"
+    ports:
+      - "8080:8080"

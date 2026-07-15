@@ -1,0 +1,25 @@
+{
+  "resourceType": "Library",
+  "id": "hypertension-bp-logic",
+  "url": "https://example.org/fhir/Library/HypertensionBpFollowup",
+  "version": "1.0.0",
+  "name": "HypertensionBpFollowup",
+  "title": "Hypertension Blood Pressure Documentation Logic",
+  "status": "active",
+  "experimental": true,
+  "type": {
+    "coding": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/library-type",
+        "code": "logic-library"
+      }
+    ]
+  },
+  "content": [
+    {
+      "contentType": "text/cql",
+      "data": "bGlicmFyeSBIeXBlcnRlbnNpb25CcEZvbGxvd3VwIHZlcnNpb24gJzEuMC4wJwoKdXNpbmcgRkhJUiB2ZXJzaW9uICc0LjAuMScKCmNvbnRleHQgUGF0aWVudAoKZGVmaW5lICJCbG9vZFByZXNzdXJlRG9jdW1lbnRhdGlvbk1pc3NpbmciOgogICJIYXNBY3RpdmVIeXBlcnRlbnNpb24iIGFuZCBub3QgIkhhc0Jsb29kUHJlc3N1cmVPYnNlcnZhdGlvbiIKCmRlZmluZSAiSGFzQWN0aXZlSHlwZXJ0ZW5zaW9uIjoKICBleGlzdHMgKFtDb25kaXRpb25dIEMKICAgIHdoZXJlIEMuY2xpbmljYWxTdGF0dXMuY29kaW5nLmNvZGUgY29udGFpbnMgJ2FjdGl2ZScKICAgICAgYW5kIExvd2VyKEMuY29kZS50ZXh0LnZhbHVlKSBjb250YWlucyAnaHlwZXJ0ZW5zaW9uJykKCmRlZmluZSAiSGFzQmxvb2RQcmVzc3VyZU9ic2VydmF0aW9uIjoKICBleGlzdHMgKFtPYnNlcnZhdGlvbl0gTwogICAgd2hlcmUgTy5zdGF0dXMudmFsdWUgaW4geyAnZmluYWwnLCAnYW1lbmRlZCcsICdjb3JyZWN0ZWQnIH0KICAgICAgYW5kICgKICAgICAgICBPLmNvZGUuY29kaW5nLmNvZGUgY29udGFpbnMgJzg1MzU0LTknCiAgICAgICAgICBvciBMb3dlcihPLmNvZGUudGV4dC52YWx1ZSkgY29udGFpbnMgJ2Jsb29kIHByZXNzdXJlJwogICAgICApKQo=",
+      "title": "CQL source; compile to ELM before installing into HAPI"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "practitioner-fhir-clinical-reasoning-demo",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5174 --strictPort",
+    "build": "vite build --mode client && vite build",
+    "start": "cd dist && node index.js",
+    "test": "bun test tests/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "format": "biome check --linter-enabled=false .",
+    "format:fix": "biome check --write --linter-enabled=false ."
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.14",
+    "hono": "^4.12.27",
+    "honox": "0.1.58",
+    "htmx.org": "^2.0.10"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.3",
+    "@hono/vite-build": "^1.11.1",
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/fhir": "^0.0.44",
+    "@types/node": "^24.10.0",
+    "tailwindcss": "^4.2.2",
+    "typed-htmx": "^0.3.1",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.9"
+  }
+}
