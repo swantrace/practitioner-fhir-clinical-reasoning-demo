@@ -34,11 +34,38 @@ bun install
 bun run dev
 ```
 
-The optional Compose service starts a local HAPI image:
+To run the local Practitioner UI against the private HAPI service on Fly, first
+authenticate the Fly CLI and set `FHIR_BASE_URL` in `.env` to
+`http://127.0.0.1:18080/fhir/`. Then start the WireGuard proxy and Vite together:
 
 ```sh
-docker compose up hapi-fhir
+bun run dev:remote
 ```
+
+Pressing `Ctrl+C` stops both processes. The proxy requires the remote HAPI
+Machine to be running and port 18080 to be available locally.
+
+The Compose stack builds the deployable HAPI image and starts it with a local
+PostgreSQL database:
+
+```sh
+docker compose up --build hapi-fhir
+```
+
+The local-only datasource credentials and persistent Docker volume are defined
+in `compose.yaml`.
+
+## Fly deployment
+
+The repository contains two Fly configurations:
+
+- `fly.toml` deploys the public Practitioner UI and CDS Hooks API.
+- `hapi/fly.toml` deploys HAPI without a public service, reachable by the UI at
+  `practitioner-hapi-fhir.internal` over Fly's private network.
+
+Provision PostgreSQL and deploy HAPI first, then deploy the root application in
+the same Fly organization. See [`hapi/README.md`](hapi/README.md) for the exact
+secret, deployment, and private verification commands.
 
 ## Knowledge artifact
 

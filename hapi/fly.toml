@@ -1,0 +1,32 @@
+app = "practitioner-hapi-fhir"
+primary_region = "yyz"
+kill_signal = "SIGTERM"
+kill_timeout = "60s"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8080"
+  # Listen on Fly's IPv6 private network as well as the local health-check path.
+  SERVER_ADDRESS = "::"
+  DB_MAX_POOL_SIZE = "5"
+  DB_MIN_IDLE = "1"
+  JAVA_TOOL_OPTIONS = "-XX:MaxRAMPercentage=75.0"
+
+[checks.fhir]
+  type = "http"
+  port = 8080
+  method = "get"
+  path = "/fhir/metadata"
+  interval = "30s"
+  timeout = "10s"
+  grace_period = "40m"
+
+[[vm]]
+  memory = "2gb"
+  cpu_kind = "shared"
+  cpus = 1
+
+# Deliberately no [http_service] or [[services]] section. The server is only
+# reachable over Fly's private 6PN network by apps in the same organization.

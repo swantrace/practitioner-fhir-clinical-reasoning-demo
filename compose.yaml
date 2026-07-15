@@ -1,8 +1,31 @@
 services:
-  hapi-fhir:
-    image: hapiproject/hapi:v8.8.0
+  postgres:
+    image: postgres:17-alpine
     environment:
-      hapi.fhir.fhir_version: R4
-      hapi.fhir.cr.enabled: "true"
+      POSTGRES_DB: hapi
+      POSTGRES_USER: hapi
+      POSTGRES_PASSWORD: hapi-local-only
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hapi -d hapi"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - hapi-postgres-data:/var/lib/postgresql/data
+
+  hapi-fhir:
+    build:
+      context: ./hapi
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/hapi
+      SPRING_DATASOURCE_USERNAME: hapi
+      SPRING_DATASOURCE_PASSWORD: hapi-local-only
+      SERVER_ADDRESS: 0.0.0.0
+    depends_on:
+      postgres:
+        condition: service_healthy
     ports:
-      - "8080:8080"
+      - "${HAPI_PORT:-8080}:8080"
+
+volumes:
+  hapi-postgres-data:
