@@ -6,6 +6,7 @@ primary_region = "yyz"
 
 [env]
   PORT = "8080"
+  FHIR_BASE_URL = "http://practitioner-hapi-fhir.internal:8080/fhir/"
   CDS_USER_ID = "Practitioner/demo"
   HAPI_PLAN_DEFINITION_ID = "hypertension-bp-followup"
 

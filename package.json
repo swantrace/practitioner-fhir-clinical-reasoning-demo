@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 5174 --strictPort",
+    "dev:hapi-proxy": "fly proxy 18080:8080 -a practitioner-hapi-fhir",
+    "dev:remote": "concurrently --kill-others --names hapi,ui \"bun run dev:hapi-proxy\" \"bun run dev\"",
     "build": "vite build --mode client && vite build",
     "start": "cd dist && bun run index.js",
     "test": "bun test tests/*.test.ts",
@@ -22,6 +24,7 @@
     "@tailwindcss/vite": "^4.2.2",
     "@types/fhir": "^0.0.44",
     "@types/node": "^24.10.0",
+    "concurrently": "^10.0.3",
     "tailwindcss": "^4.2.2",
     "typed-htmx": "^0.3.1",
     "typescript": "^5.9.3",
