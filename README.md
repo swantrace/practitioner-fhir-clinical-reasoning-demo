@@ -125,6 +125,34 @@ Signs section and invokes the CDS Hooks service again. The newly stored
 Observation makes the CQL condition false, so the warning Card disappears. The
 Observation carries the demo dataset tag and is removed by `bun run demo:reset`.
 
+## Synthea patient dataset
+
+The three deterministic patients remain dedicated to the CDS acceptance
+scenarios. Twelve additional Synthea transaction Bundles under
+`fixtures/synthea/` provide a larger, realistic dataset for patient search and
+chart browsing. Install and verify them separately:
+
+```sh
+bun run demo:synthea:install
+bun run demo:synthea:verify
+```
+
+The importer validates each Bundle, preserves its transaction `fullUrl`
+references, converts Synthea's POST requests to `PUT ResourceType/id`, and adds
+the `synthea-12-v1` dataset tag to every resource. Re-running the importer
+updates the same 6,925 clinical resources instead of creating duplicates. It
+also installs 38 deterministic Practitioner, Organization, and Location
+resources required by Synthea's conditional references. The normal `demo:reset`
+command only restores the three CDS test patients and leaves the 12 Synthea
+patients in place.
+
+To install the knowledge artifacts, reset the three test scenarios, and import
+all 12 Synthea patients in one operation, run:
+
+```sh
+bun run demo:seed:all
+```
+
 ## Verification
 
 ```sh
