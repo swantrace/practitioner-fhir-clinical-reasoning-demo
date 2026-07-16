@@ -5,6 +5,8 @@ type PatientFormProps = {
   method?: 'post' | 'patch';
   values?: Partial<PatientInput>;
   errors?: Record<string, string>;
+  formId?: string;
+  showCancel?: boolean;
   submitLabel: string;
   target?: string;
 };
@@ -19,7 +21,7 @@ export function PatientForm(props: PatientFormProps) {
       hx-patch={method === 'patch' ? props.action : undefined}
       hx-target={props.target ?? '#patient-form'}
       hx-swap="outerHTML"
-      id="patient-form"
+      id={props.formId ?? 'patient-form'}
       method="post"
       action={props.action}
     >
@@ -37,7 +39,13 @@ export function PatientForm(props: PatientFormProps) {
       />
       <label class="grid gap-1 text-sm font-medium text-slate-700">
         Gender
-        <select class="field" name="gender">
+        <select
+          aria-describedby={props.errors?.gender ? 'gender-error' : undefined}
+          aria-invalid={props.errors?.gender ? 'true' : undefined}
+          class="field"
+          name="gender"
+          required
+        >
           {['', 'male', 'female', 'other', 'unknown'].map((gender) => (
             <option value={gender} selected={gender === props.values?.gender}>
               {gender || 'Select gender'}
@@ -45,7 +53,9 @@ export function PatientForm(props: PatientFormProps) {
           ))}
         </select>
         {props.errors?.gender ? (
-          <span class="text-xs text-red-700">{props.errors.gender}</span>
+          <span class="text-xs text-red-700" data-form-error id="gender-error">
+            {props.errors.gender}
+          </span>
         ) : null}
       </label>
       <FormField
@@ -55,9 +65,20 @@ export function PatientForm(props: PatientFormProps) {
         value={props.values?.birthDate}
         errors={props.errors}
       />
-      <button class="button w-fit" type="submit">
-        {props.submitLabel}
-      </button>
+      <div class="flex flex-wrap gap-2">
+        <button class="button" type="submit">
+          {props.submitLabel}
+        </button>
+        {props.showCancel ? (
+          <button
+            class="button-secondary"
+            data-close-patient-dialog
+            type="button"
+          >
+            Cancel
+          </button>
+        ) : null}
+      </div>
     </form>
   );
 }
@@ -69,18 +90,30 @@ function FormField(props: {
   value?: string;
   errors?: Record<string, string>;
 }) {
+  const errorId = `${props.name}-error`;
+
   return (
     <label class="grid gap-1 text-sm font-medium text-slate-700">
       {props.label}
       <input
+        aria-describedby={props.errors?.[props.name] ? errorId : undefined}
+        aria-invalid={props.errors?.[props.name] ? 'true' : undefined}
         class="field"
+        max={props.type === 'date' ? today() : undefined}
         name={props.name}
+        required
         type={props.type ?? 'text'}
         value={props.value ?? ''}
       />
       {props.errors?.[props.name] ? (
-        <span class="text-xs text-red-700">{props.errors[props.name]}</span>
+        <span class="text-xs text-red-700" data-form-error id={errorId}>
+          {props.errors[props.name]}
+        </span>
       ) : null}
     </label>
   );
+}
+
+function today() {
+  return new Date().toISOString().slice(0, 10);
 }
