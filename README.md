@@ -70,6 +70,31 @@ Provision PostgreSQL and deploy HAPI first, then deploy the root application in
 the same Fly organization. See [`hapi/README.md`](hapi/README.md) for the exact
 secret, deployment, and private verification commands.
 
+## CI/CD
+
+The GitHub Actions workflow in `.github/workflows/ci-cd.yml` runs formatting,
+type checking, tests, and a production build for every pull request targeting
+`main`. A push to `main` deploys the Practitioner UI and runs smoke tests against
+the public root and CDS discovery endpoints. The private HAPI app is deployed
+first only when a file under `hapi/` changed; its Fly health check verifies
+`/fhir/metadata` before the UI deployment can continue.
+
+Create app-scoped Fly deploy tokens from each app directory and save them under
+**GitHub repository settings → Secrets and variables → Actions**:
+
+```sh
+flyctl tokens create deploy -x 8760h -a practitioner-ui
+# Save as FLY_API_TOKEN_UI
+
+flyctl tokens create deploy -x 8760h -a practitioner-hapi-fhir
+# Save as FLY_API_TOKEN_HAPI
+```
+
+Protect `main` with a GitHub branch ruleset that requires a pull request and the
+`PR quality` status check, and disallow bypassing the rule. The deployment does
+not install clinical artifacts, import fixtures, or reset production data;
+those remain explicit administrative operations.
+
 ## Knowledge artifact
 
 The source artifact is under
