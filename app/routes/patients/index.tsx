@@ -1,5 +1,8 @@
 import { createRoute } from 'honox/factory';
-import { PatientCreatePanel } from '../../components/patient-create-panel';
+import {
+  PatientCreateDialog,
+  PatientCreatePanel,
+} from '../../components/patient-create-panel';
 import { PatientSearch } from '../../components/patient-search';
 import { PatientResultsSkeleton } from '../../components/patient-skeleton';
 import { createPatient } from '../../fhir/patient';
@@ -20,16 +23,17 @@ export const POST = createRoute(async (c) => {
   const result = await createPatient(validation.data);
   if (!result.ok) {
     return c.html(
-      <PatientCreatePanel
-        errors={{ firstName: result.message }}
-        values={validation.data}
-      />,
+      <PatientCreatePanel error={result.message} values={validation.data} />,
     );
   }
 
-  return c.html(
-    <PatientCreatePanel message="Patient created. Refresh or search to view the updated list." />,
+  c.header(
+    'HX-Trigger-After-Swap',
+    JSON.stringify({
+      'patient-created': { message: 'Patient created successfully.' },
+    }),
   );
+  return c.html(<PatientCreatePanel />);
 });
 
 export default createRoute(async (c) => {
@@ -48,13 +52,38 @@ export default createRoute(async (c) => {
             Search, create, edit, and manage Patient resources.
           </p>
         </div>
+        <button
+          aria-controls="patient-create-dialog"
+          aria-haspopup="dialog"
+          class="button"
+          data-open-patient-dialog
+          type="button"
+        >
+          Add patient
+        </button>
       </div>
-      <section class="grid gap-3">
+      <section
+        class="grid gap-3"
+        hx-get="/patients/results"
+        hx-swap="outerHTML"
+        hx-target="#patient-results"
+        hx-trigger="patient-created from:body"
+      >
         <h2 class="section-title">Find patients</h2>
         <PatientSearch query={query} />
         <PatientResultsSkeleton cursor={cursor} page={page} query={query} />
       </section>
-      <PatientCreatePanel />
+      <PatientCreateDialog />
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        class="fixed right-4 bottom-4 z-50 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-900 shadow-lg"
+        hidden
+        id="patient-created-toast"
+        role="status"
+      >
+        <span data-toast-message>Patient created successfully.</span>
+      </div>
     </main>,
     { title: 'Patients' },
   );

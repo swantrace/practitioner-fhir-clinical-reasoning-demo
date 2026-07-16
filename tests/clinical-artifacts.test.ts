@@ -81,5 +81,20 @@ describe('hypertension clinical artifacts', () => {
       'hypertension-with-bp',
       'no-hypertension',
     ]);
+
+    const patientGenders = Object.fromEntries(
+      bundle.entry
+        .map((entry: { resource: fhir4.Resource }) => entry.resource)
+        .filter(
+          (resource: fhir4.Resource): resource is fhir4.Patient =>
+            resource.resourceType === 'Patient',
+        )
+        .map((patient: fhir4.Patient) => [patient.id, patient.gender]),
+    );
+    assert.deepEqual(patientGenders, {
+      'hypertension-missing-bp': 'male',
+      'hypertension-with-bp': 'female',
+      'no-hypertension': 'other',
+    });
   });
 });

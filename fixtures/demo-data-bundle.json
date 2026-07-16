@@ -16,7 +16,7 @@
         },
         "active": true,
         "name": [{ "given": ["Alex"], "family": "Morgan" }],
-        "gender": "unknown",
+        "gender": "male",
         "birthDate": "1974-04-18"
       },
       "request": { "method": "PUT", "url": "Patient/hypertension-missing-bp" }
@@ -72,7 +72,7 @@
         },
         "active": true,
         "name": [{ "given": ["Jordan"], "family": "Lee" }],
-        "gender": "unknown",
+        "gender": "female",
         "birthDate": "1969-09-03"
       },
       "request": { "method": "PUT", "url": "Patient/hypertension-with-bp" }
@@ -193,7 +193,7 @@
         },
         "active": true,
         "name": [{ "given": ["Taylor"], "family": "Rivera" }],
-        "gender": "unknown",
+        "gender": "other",
         "birthDate": "1982-01-27"
       },
       "request": { "method": "PUT", "url": "Patient/no-hypertension" }

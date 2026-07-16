@@ -5,6 +5,11 @@
     @apply bg-slate-50 text-slate-950 antialiased;
   }
 
+  .patient-dialog::backdrop {
+    background: rgb(15 23 42 / 55%);
+    backdrop-filter: blur(2px);
+  }
+
   a {
     @apply text-teal-700 hover:text-teal-900;
   }

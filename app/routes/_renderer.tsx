@@ -1,5 +1,5 @@
 import { jsxRenderer } from 'hono/jsx-renderer';
-import { Link } from 'honox/server';
+import { Link, Script } from 'honox/server';
 
 export default jsxRenderer(({ children, title }) => {
   const pageTitle = title
@@ -14,6 +14,7 @@ export default jsxRenderer(({ children, title }) => {
         <title>{pageTitle}</title>
         <link rel="icon" href="/favicon.ico" />
         <Link href="/app/style.css" rel="stylesheet" />
+        <Script src="/app/client.ts" async />
         <script
           src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js"
           integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V"
