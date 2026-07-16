@@ -12,7 +12,7 @@ export async function fhirRequest<T>(
 ): Promise<FhirResult<T>> {
   try {
     const env = getUiEnv();
-    const url = new URL(path.replace(/^\/+/, ''), ensureSlash(env.fhirBaseUrl));
+    const url = buildFhirUrl(env.fhirBaseUrl, path);
 
     const response = await fetch(url, {
       method: options.method ?? 'GET',
@@ -43,6 +43,18 @@ export async function fhirRequest<T>(
         'FHIR service is not reachable. Check local environment settings.',
     };
   }
+}
+
+export function buildFhirUrl(baseUrl: string, path: string) {
+  const base = new URL(ensureSlash(baseUrl));
+
+  if (path.startsWith('?')) {
+    base.pathname = base.pathname.replace(/\/$/, '');
+    base.search = path;
+    return base;
+  }
+
+  return new URL(path.replace(/^\/+/, ''), base);
 }
 
 export function bundleEntries<T extends fhir4.Resource>(

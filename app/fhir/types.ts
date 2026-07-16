@@ -20,3 +20,10 @@ export type PatientChartData = {
   conditions: fhir4.Condition[];
   medications: fhir4.MedicationRequest[];
 };
+
+export type PatientPage = {
+  patients: fhir4.Patient[];
+  total?: number;
+  nextCursor?: string;
+  previousCursor?: string;
+};

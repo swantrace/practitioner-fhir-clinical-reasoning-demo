@@ -1,10 +1,12 @@
 export function PatientSearch(props: { query?: string }) {
   return (
     <form
+      action="/patients"
       class="flex flex-col gap-2 sm:flex-row"
       hx-get="/patients/results"
       hx-target="#patient-results"
       hx-swap="outerHTML"
+      method="get"
     >
       <input
         class="field min-w-0 flex-1"
@@ -16,6 +18,11 @@ export function PatientSearch(props: { query?: string }) {
       <button class="button-secondary" type="submit">
         Search
       </button>
+      {props.query ? (
+        <a class="button-secondary" href="/patients">
+          Clear search
+        </a>
+      ) : null}
     </form>
   );
 }

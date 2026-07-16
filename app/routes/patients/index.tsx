@@ -34,6 +34,8 @@ export const POST = createRoute(async (c) => {
 
 export default createRoute(async (c) => {
   const query = c.req.query('name')?.trim();
+  const cursor = c.req.query('cursor');
+  const page = positiveInteger(c.req.query('page'));
 
   return c.render(
     <main class="page-shell grid gap-6">
@@ -46,17 +48,19 @@ export default createRoute(async (c) => {
             Search, create, edit, and manage Patient resources.
           </p>
         </div>
-        <a class="button-secondary" href="/patients">
-          Reset
-        </a>
       </div>
       <section class="grid gap-3">
         <h2 class="section-title">Find patients</h2>
         <PatientSearch query={query} />
-        <PatientResultsSkeleton />
+        <PatientResultsSkeleton cursor={cursor} page={page} query={query} />
       </section>
       <PatientCreatePanel />
     </main>,
     { title: 'Patients' },
   );
 });
+
+function positiveInteger(value: string | undefined) {
+  const parsed = Number(value);
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : 1;
+}
