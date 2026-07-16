@@ -73,10 +73,25 @@ secret, deployment, and private verification commands.
 ## Knowledge artifact
 
 The source artifact is under
-`clinical-artifacts/hypertension-bp-followup`. Translate the CQL to ELM, add the
-ELM attachment to the FHIR Library, and install the Library and PlanDefinition
-on HAPI before invoking the service. The repository does not treat the old
-empty JavaScript-engine ELM placeholder as executable content.
+`clinical-artifacts/hypertension-bp-followup`. The checked-in FHIR Library
+contains both CQL source and executable JSON ELM generated with the pinned
+CQFramework translator. Java 17+ and Maven are needed only to regenerate it:
+
+```sh
+bun run clinical:compile
+```
+
+With `FHIR_BASE_URL` configured, install the knowledge artifacts, replace the
+tagged fixture data, and verify all three `$apply` outcomes:
+
+```sh
+bun run demo:setup
+```
+
+The individual `demo:install`, `demo:reset`, and `demo:verify` commands are
+idempotent and can also be run separately. The three scenarios are active
+hypertension without blood pressure (applicable), active hypertension with
+blood pressure (not applicable), and no hypertension (not applicable).
 
 ## Verification
 
@@ -84,4 +99,5 @@ empty JavaScript-engine ELM placeholder as executable content.
 bun run typecheck
 bun test
 bun run build
+bun run demo:verify
 ```

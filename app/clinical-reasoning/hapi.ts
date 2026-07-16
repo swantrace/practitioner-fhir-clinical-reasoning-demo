@@ -37,8 +37,19 @@ export function hasApplicableAction(value: unknown): boolean {
   const resourceType = resource.resourceType;
 
   if (resourceType === 'CarePlan') {
+    if (hasApplicableAction(resource.contained)) return true;
+
+    // HAPI always adds a reference-only CarePlan activity that points to the
+    // contained RequestGroup, even when every PlanDefinition action is filtered
+    // out. Only a direct inline activity detail is independently actionable.
     return (
-      nonEmpty(resource.activity) || hasApplicableAction(resource.contained)
+      Array.isArray(resource.activity) &&
+      resource.activity.some(
+        (activity) =>
+          activity !== null &&
+          typeof activity === 'object' &&
+          'detail' in activity,
+      )
     );
   }
 
