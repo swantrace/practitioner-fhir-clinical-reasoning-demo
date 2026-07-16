@@ -1,9 +1,19 @@
-export function PatientResultsSkeleton() {
+export function PatientResultsSkeleton(props: {
+  query?: string;
+  cursor?: string;
+  page?: number;
+}) {
+  const params = new URLSearchParams();
+  if (props.query) params.set('name', props.query);
+  if (props.cursor) params.set('cursor', props.cursor);
+  if (props.page && props.page > 1) params.set('page', String(props.page));
+  const query = params.toString();
+
   return (
     <div
       id="patient-results"
       class="overflow-hidden rounded-md border border-slate-200 bg-white"
-      hx-get="/patients/results"
+      hx-get={`/patients/results${query ? `?${query}` : ''}`}
       hx-trigger="load"
       hx-swap="outerHTML"
     >

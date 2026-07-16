@@ -1,7 +1,25 @@
 export function patientName(patient: fhir4.Patient) {
   const name = patient.name?.[0];
-  const given = name?.given?.join(' ') ?? '';
-  return [given, name?.family].filter(Boolean).join(' ') || 'Unnamed patient';
+  const normalize = isSyntheaPatient(patient) ? removeNumericSuffix : identity;
+  const given = name?.given?.map(normalize).join(' ') ?? '';
+  const family = name?.family ? normalize(name.family) : undefined;
+  return [given, family].filter(Boolean).join(' ') || 'Unnamed patient';
+}
+
+function isSyntheaPatient(patient: fhir4.Patient) {
+  return patient.meta?.tag?.some(
+    (tag) =>
+      tag.system === 'https://example.org/fhir/demo-dataset' &&
+      tag.code === 'synthea-12-v1',
+  );
+}
+
+function removeNumericSuffix(value: string) {
+  return value.replace(/\d+$/u, '');
+}
+
+function identity(value: string) {
+  return value;
 }
 
 export function patientAge(patient: fhir4.Patient) {
