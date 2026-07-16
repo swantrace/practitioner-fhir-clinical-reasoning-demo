@@ -15,6 +15,7 @@
     "demo:install": "bun run scripts/demo/install.ts",
     "demo:reset": "bun run scripts/demo/reset.ts",
     "demo:verify": "bun run scripts/demo/verify.ts",
+    "demo:verify:cds": "bun run scripts/demo/verify-cds.ts",
     "demo:setup": "bun run demo:install && bun run demo:reset && bun run demo:verify",
     "format": "biome check --linter-enabled=false .",
     "format:fix": "biome check --write --linter-enabled=false ."

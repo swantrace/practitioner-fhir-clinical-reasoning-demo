@@ -93,6 +93,21 @@ idempotent and can also be run separately. The three scenarios are active
 hypertension without blood pressure (applicable), active hypertension with
 blood pressure (not applicable), and no hypertension (not applicable).
 
+To verify the complete CDS Hooks boundary, keep the HonoX application running
+and execute the CDS response verifier in another terminal:
+
+```sh
+bun run dev:remote
+# In another terminal:
+bun run demo:verify:cds
+```
+
+The verifier checks CDS discovery, sends three deterministic `patient-view`
+requests, validates the Cards response shape, and confirms the expected card
+count and warning content. To test a deployed application instead, override
+`CDS_SERVICE_BASE_URL`; `CDS_BEARER_TOKEN` is supported when that endpoint is
+protected.
+
 ## Verification
 
 ```sh
