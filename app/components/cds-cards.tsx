@@ -12,7 +12,7 @@ export function CdsCardsPanel(props: { patientId: string }) {
       <div
         id="cds-cards"
         hx-post={`/api/patients/${encodeURIComponent(props.patientId)}/cds-cards`}
-        hx-trigger="load"
+        hx-trigger="load, blood-pressure-recorded from:body"
         hx-swap="innerHTML"
       >
         <div class="rounded-md border border-slate-200 bg-white px-4 py-6 text-sm text-slate-600">
@@ -23,7 +23,7 @@ export function CdsCardsPanel(props: { patientId: string }) {
   );
 }
 
-export function CdsCards(props: { result: CdsCardsResult }) {
+export function CdsCards(props: { result: CdsCardsResult; patientId: string }) {
   if (!props.result.ok) return <ErrorState message={props.result.message} />;
   if (!props.result.data.length) {
     return (
@@ -34,13 +34,13 @@ export function CdsCards(props: { result: CdsCardsResult }) {
   return (
     <div class="grid gap-3">
       {props.result.data.map((card) => (
-        <CdsCardView card={card} />
+        <CdsCardView card={card} patientId={props.patientId} />
       ))}
     </div>
   );
 }
 
-function CdsCardView(props: { card: CdsCard }) {
+function CdsCardView(props: { card: CdsCard; patientId: string }) {
   const styles = indicatorStyles[props.card.indicator];
 
   return (
@@ -59,6 +59,20 @@ function CdsCardView(props: { card: CdsCard }) {
       <p class="mt-3 text-xs text-slate-500">
         Source: {props.card.source.label}
       </p>
+      {props.card.indicator === 'warning' ? (
+        <div>
+          <button
+            class="button mt-3"
+            hx-get={`/api/patients/${encodeURIComponent(props.patientId)}/blood-pressure`}
+            hx-swap="innerHTML"
+            hx-target="#blood-pressure-workflow"
+            type="button"
+          >
+            Record blood pressure
+          </button>
+          <div id="blood-pressure-workflow"></div>
+        </div>
+      ) : null}
     </article>
   );
 }

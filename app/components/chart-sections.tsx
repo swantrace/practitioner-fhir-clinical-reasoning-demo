@@ -1,9 +1,25 @@
 import { codeText, observationValue } from '../fhir/format';
 import { EmptyState } from './errors';
 
-export function VitalSigns(props: { observations: fhir4.Observation[] }) {
+export function VitalSigns(props: {
+  observations: fhir4.Observation[];
+  patientId?: string;
+}) {
   return (
-    <Section title="Vital signs">
+    <section
+      class="grid gap-3"
+      hx-get={
+        props.patientId
+          ? `/api/patients/${encodeURIComponent(props.patientId)}/vital-signs`
+          : undefined
+      }
+      hx-swap="outerHTML"
+      hx-trigger={
+        props.patientId ? 'blood-pressure-recorded from:body' : undefined
+      }
+      id={props.patientId ? 'vital-signs' : undefined}
+    >
+      <h2 class="section-title">Vital signs</h2>
       {!props.observations.length ? (
         <EmptyState message="No vital signs found." />
       ) : (
@@ -15,7 +31,7 @@ export function VitalSigns(props: { observations: fhir4.Observation[] }) {
           ])}
         />
       )}
-    </Section>
+    </section>
   );
 }
 

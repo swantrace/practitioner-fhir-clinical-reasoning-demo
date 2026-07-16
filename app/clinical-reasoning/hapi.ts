@@ -26,6 +26,20 @@ export async function applyHypertensionPlan(
   return { ok: true, applicable: hasApplicableAction(result.data) };
 }
 
+export async function waitUntilHypertensionPlanNotApplicable(
+  patientId: string,
+  evaluator: typeof applyHypertensionPlan = applyHypertensionPlan,
+  pause: (milliseconds: number) => Promise<unknown> = delay,
+) {
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    const result = await evaluator(patientId);
+    if (result.ok && !result.applicable) return true;
+    await pause(400);
+  }
+
+  return false;
+}
+
 export function hasApplicableAction(value: unknown): boolean {
   if (!value || typeof value !== 'object') return false;
 
@@ -81,4 +95,8 @@ export function hasApplicableAction(value: unknown): boolean {
 
 function nonEmpty(value: unknown) {
   return Array.isArray(value) && value.length > 0;
+}
+
+function delay(milliseconds: number) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
