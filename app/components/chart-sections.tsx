@@ -1,5 +1,6 @@
 import { codeText, observationValue } from '../fhir/format';
 import { EmptyState } from './errors';
+import { VitalSignOverview } from './vital-sign-trends';
 
 export function VitalSigns(props: {
   observations: fhir4.Observation[];
@@ -23,13 +24,24 @@ export function VitalSigns(props: {
       {!props.observations.length ? (
         <EmptyState message="No vital signs found." />
       ) : (
-        <Rows
-          rows={props.observations.map((item) => [
-            codeText(item),
-            observationValue(item),
-            item.effectiveDateTime,
-          ])}
-        />
+        <>
+          <VitalSignOverview observations={props.observations} />
+          <details class="rounded-md border border-slate-200 bg-white">
+            <summary class="cursor-pointer px-4 py-3 text-sm font-medium text-teal-700">
+              View all {props.observations.length} recorded observations
+            </summary>
+            <div class="border-t border-slate-200">
+              <Rows
+                rows={props.observations.map((item) => [
+                  codeText(item),
+                  observationValue(item),
+                  item.effectiveDateTime,
+                ])}
+                unframed
+              />
+            </div>
+          </details>
+        </>
       )}
     </section>
   );
@@ -80,9 +92,18 @@ function Section(props: { title: string; children: unknown }) {
   );
 }
 
-function Rows(props: { rows: Array<Array<string | undefined>> }) {
+function Rows(props: {
+  rows: Array<Array<string | undefined>>;
+  unframed?: boolean;
+}) {
   return (
-    <div class="overflow-hidden rounded-md border border-slate-200 bg-white">
+    <div
+      class={
+        props.unframed
+          ? 'overflow-x-auto'
+          : 'overflow-hidden rounded-md border border-slate-200 bg-white'
+      }
+    >
       <table class="min-w-full divide-y divide-slate-200 text-sm">
         <tbody class="divide-y divide-slate-100">
           {props.rows.map(([name, status, detail]) => (
