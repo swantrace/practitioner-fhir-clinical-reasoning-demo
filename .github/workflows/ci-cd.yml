@@ -1,0 +1,113 @@
+name: CI/CD
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  quality:
+    name: PR quality
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Check formatting
+        run: bun run format
+
+      - name: Check types
+        run: bun run typecheck
+
+      - name: Run tests
+        run: bun test
+
+      - name: Build production application
+        run: bun run build
+
+  changes:
+    name: Detect deployment changes
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      hapi: ${{ steps.filter.outputs.hapi }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect HAPI changes
+        id: filter
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          CURRENT_SHA: ${{ github.sha }}
+        run: |
+          if git cat-file -e "${BEFORE_SHA}^{commit}" && git diff --quiet "$BEFORE_SHA" "$CURRENT_SHA" -- hapi/; then
+            echo "hapi=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "hapi=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  deploy-hapi:
+    name: Deploy private HAPI
+    if: github.event_name == 'push' && needs.changes.outputs.hapi == 'true'
+    needs: changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy HAPI
+        working-directory: hapi
+        run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN_HAPI }}
+
+  deploy-ui:
+    name: Deploy Practitioner UI
+    if: >-
+      always() &&
+      github.event_name == 'push' &&
+      needs.changes.result == 'success' &&
+      (needs.deploy-hapi.result == 'success' || needs.deploy-hapi.result == 'skipped')
+    needs: [changes, deploy-hapi]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy UI
+        run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN_UI }}
+
+      - name: Smoke test public endpoints
+        run: |
+          curl --fail --silent --show-error --retry 12 --retry-all-errors --retry-delay 5 --max-time 20 https://practitioner-ui.fly.dev/
+          curl --fail --silent --show-error --retry 12 --retry-all-errors --retry-delay 5 --max-time 20 https://practitioner-ui.fly.dev/cds-services
