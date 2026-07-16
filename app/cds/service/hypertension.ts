@@ -21,9 +21,10 @@ export async function evaluateHypertensionService(
       cards: [
         {
           uuid: crypto.randomUUID(),
-          summary: 'Blood pressure documentation may be missing',
+          summary:
+            'Hypertension care gap: blood pressure documentation missing',
           detail:
-            'The patient has active hypertension, but no blood-pressure observation was found.',
+            'Active hypertension is documented, but no final blood-pressure Observation (LOINC 85354-9) was found. Record a current measurement to close this care gap.',
           indicator: 'warning',
           source: {
             label: 'Hypertension Blood Pressure Follow-up',
