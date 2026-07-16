@@ -178,6 +178,25 @@
         "method": "PUT",
         "url": "Observation/hypertension-with-bp-observation"
       }
+    },
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "no-hypertension",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "active": true,
+        "name": [{ "given": ["Taylor"], "family": "Rivera" }],
+        "gender": "unknown",
+        "birthDate": "1982-01-27"
+      },
+      "request": { "method": "PUT", "url": "Patient/no-hypertension" }
     }
   ]
 }

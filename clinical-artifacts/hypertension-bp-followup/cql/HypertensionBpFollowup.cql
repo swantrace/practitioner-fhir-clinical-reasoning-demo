@@ -9,13 +9,14 @@ define "BloodPressureDocumentationMissing":
 
 define "HasActiveHypertension":
   exists ([Condition] C
-    where C.clinicalStatus.coding.code contains 'active'
-      and Lower(C.code.text.value) contains 'hypertension')
+    where C.clinicalStatus.coding.code.value contains 'active'
+      and exists (C.code.coding Coding
+        where Coding.system.value = 'http://snomed.info/sct'
+          and Coding.code.value = '38341003'))
 
 define "HasBloodPressureObservation":
   exists ([Observation] O
     where O.status.value in { 'final', 'amended', 'corrected' }
-      and (
-        O.code.coding.code contains '85354-9'
-          or Lower(O.code.text.value) contains 'blood pressure'
-      ))
+      and exists (O.code.coding Coding
+        where Coding.system.value = 'http://loinc.org'
+          and Coding.code.value = '85354-9'))

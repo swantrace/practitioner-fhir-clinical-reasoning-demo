@@ -11,6 +11,11 @@
     "start": "cd dist && bun run index.js",
     "test": "bun test tests/*.test.ts",
     "typecheck": "tsc --noEmit",
+    "clinical:compile": "bun run scripts/compile-cql.ts",
+    "demo:install": "bun run scripts/demo/install.ts",
+    "demo:reset": "bun run scripts/demo/reset.ts",
+    "demo:verify": "bun run scripts/demo/verify.ts",
+    "demo:setup": "bun run demo:install && bun run demo:reset && bun run demo:verify",
     "format": "biome check --linter-enabled=false .",
     "format:fix": "biome check --write --linter-enabled=false ."
   },

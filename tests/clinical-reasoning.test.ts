@@ -14,7 +14,21 @@ describe('HAPI PlanDefinition result mapping', () => {
   });
 
   test('returns false for a CarePlan with no applicable activity', () => {
-    assert.equal(hasApplicableAction({ resourceType: 'CarePlan', activity: [] }), false);
+    assert.equal(
+      hasApplicableAction({ resourceType: 'CarePlan', activity: [] }),
+      false,
+    );
+  });
+
+  test('ignores HAPI reference-only activity when its RequestGroup has no actions', () => {
+    assert.equal(
+      hasApplicableAction({
+        resourceType: 'CarePlan',
+        contained: [{ resourceType: 'RequestGroup' }],
+        activity: [{ reference: { reference: '#hypertension-bp-followup' } }],
+      }),
+      false,
+    );
   });
 
   test('detects actions nested in a transaction result Bundle', () => {

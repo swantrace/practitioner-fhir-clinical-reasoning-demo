@@ -7,6 +7,9 @@
   "title": "Hypertension Blood Pressure Follow-up",
   "status": "active",
   "experimental": true,
+  "description": "Recommends blood-pressure documentation for a patient with an active SNOMED CT hypertension condition and no final, amended, or corrected LOINC blood-pressure panel observation.",
+  "purpose": "Demonstrate CQL-based applicability evaluation through HAPI FHIR Clinical Reasoning.",
+  "usage": "Invoke $apply with a Patient subject and useServerData=true after installing the referenced Library.",
   "type": {
     "coding": [
       {
@@ -22,6 +25,7 @@
     {
       "title": "Record blood pressure",
       "description": "Record a blood-pressure observation for this patient.",
+      "textEquivalent": "Record a LOINC 85354-9 blood-pressure panel observation.",
       "condition": [
         {
           "kind": "applicability",
