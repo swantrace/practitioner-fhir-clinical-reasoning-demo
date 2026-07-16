@@ -23,5 +23,5 @@ export const POST = createRoute(async (c) => {
     ? { ok: true, data: result.data.cards }
     : { ok: false, message: result.message };
 
-  return c.html(<CdsCards result={viewResult} />);
+  return c.html(<CdsCards patientId={patientId} result={viewResult} />);
 });

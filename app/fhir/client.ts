@@ -16,6 +16,7 @@ export async function fhirRequest<T>(
 
     const response = await fetch(url, {
       method: options.method ?? 'GET',
+      cache: 'no-store',
       headers: {
         accept: 'application/fhir+json',
         ...(env.fhirBearerToken

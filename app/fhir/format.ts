@@ -42,9 +42,21 @@ export function observationValue(observation: fhir4.Observation) {
       .join(' ');
   }
 
+  const systolic = componentQuantity(observation, '8480-6');
+  const diastolic = componentQuantity(observation, '8462-4');
+  if (systolic?.value !== undefined && diastolic?.value !== undefined) {
+    return `${systolic.value}/${diastolic.value} ${systolic.unit ?? systolic.code ?? 'mmHg'}`;
+  }
+
   return (
     observation.valueString ??
     observation.valueCodeableConcept?.text ??
     'Not recorded'
   );
+}
+
+function componentQuantity(observation: fhir4.Observation, code: string) {
+  return observation.component?.find((component) =>
+    component.code.coding?.some((coding) => coding.code === code),
+  )?.valueQuantity;
 }

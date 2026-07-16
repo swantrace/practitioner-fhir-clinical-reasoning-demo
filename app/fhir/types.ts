@@ -5,6 +5,11 @@ export type PatientInput = {
   birthDate: string;
 };
 
+export type BloodPressureInput = {
+  systolic: number;
+  diastolic: number;
+};
+
 export type FhirResult<T> =
   | { ok: true; data: T }
   | { ok: false; message: string; status?: number };

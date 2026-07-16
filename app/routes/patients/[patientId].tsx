@@ -61,7 +61,7 @@ export default createRoute(async (c) => {
         vitalSigns={chart.data.vitalSigns}
       />
       <CdsCardsPanel patientId={patientId} />
-      <VitalSigns observations={chart.data.vitalSigns} />
+      <VitalSigns observations={chart.data.vitalSigns} patientId={patientId} />
       <Conditions conditions={chart.data.conditions} />
       <Medications medications={chart.data.medications} />
     </main>,

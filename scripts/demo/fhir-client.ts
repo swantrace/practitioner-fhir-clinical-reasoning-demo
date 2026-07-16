@@ -47,6 +47,7 @@ export async function fhirRequest<T = FhirResource>(
 
   const response = await fetch(path ? `${baseUrl}/${path}` : baseUrl, {
     ...init,
+    cache: 'no-store',
     headers,
   });
   const text = await response.text();

@@ -108,6 +108,23 @@ count and warning content. To test a deployed application instead, override
 `CDS_SERVICE_BASE_URL`; `CDS_BEARER_TOKEN` is supported when that endpoint is
 protected.
 
+## Closed-loop blood-pressure workflow
+
+For the `hypertension-missing-bp` scenario, the warning Card includes a
+**Record blood pressure** action. The practitioner can submit systolic and
+diastolic values without leaving the patient chart. HonoX validates the values
+and creates a FHIR R4 vital-signs Observation using:
+
+- LOINC `85354-9` for the blood-pressure panel
+- LOINC `8480-6` for systolic pressure
+- LOINC `8462-4` for diastolic pressure
+- UCUM `mm[Hg]` for both component quantities
+
+After a successful FHIR create interaction, an HTMX event refreshes the Vital
+Signs section and invokes the CDS Hooks service again. The newly stored
+Observation makes the CQL condition false, so the warning Card disappears. The
+Observation carries the demo dataset tag and is removed by `bun run demo:reset`.
+
 ## Verification
 
 ```sh

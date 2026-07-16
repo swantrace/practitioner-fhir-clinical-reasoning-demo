@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { describe, test } from 'node:test';
-import { hasApplicableAction } from '../app/clinical-reasoning/hapi';
+import {
+  hasApplicableAction,
+  waitUntilHypertensionPlanNotApplicable,
+} from '../app/clinical-reasoning/hapi';
 
 describe('HAPI PlanDefinition result mapping', () => {
   test('detects an applicable CarePlan activity', () => {
@@ -46,5 +49,17 @@ describe('HAPI PlanDefinition result mapping', () => {
       }),
       true,
     );
+  });
+
+  test('waits until a newly recorded observation changes applicability', async () => {
+    let evaluations = 0;
+    const updated = await waitUntilHypertensionPlanNotApplicable(
+      'patient-123',
+      async () => ({ ok: true, applicable: ++evaluations < 3 }),
+      async () => undefined,
+    );
+
+    assert.equal(updated, true);
+    assert.equal(evaluations, 3);
   });
 });
