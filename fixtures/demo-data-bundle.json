@@ -60,6 +60,232 @@
     },
     {
       "resource": {
+        "resourceType": "Condition",
+        "id": "hypertension-missing-bp-hyperlipidemia",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "55822004",
+              "display": "Hyperlipidemia"
+            }
+          ],
+          "text": "Hyperlipidemia"
+        },
+        "subject": { "reference": "Patient/hypertension-missing-bp" },
+        "onsetDateTime": "2021-06-14"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Condition/hypertension-missing-bp-hyperlipidemia"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "hypertension-missing-bp-heart-rate-1",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ],
+          "text": "Heart rate"
+        },
+        "subject": { "reference": "Patient/hypertension-missing-bp" },
+        "effectiveDateTime": "2026-04-16T09:15:00-06:00",
+        "valueQuantity": {
+          "value": 82,
+          "unit": "beats/minute",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/hypertension-missing-bp-heart-rate-1"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "hypertension-missing-bp-heart-rate-2",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ],
+          "text": "Heart rate"
+        },
+        "subject": { "reference": "Patient/hypertension-missing-bp" },
+        "effectiveDateTime": "2026-07-15T08:45:00-06:00",
+        "valueQuantity": {
+          "value": 78,
+          "unit": "beats/minute",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/hypertension-missing-bp-heart-rate-2"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "hypertension-missing-bp-weight-1",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "29463-7",
+              "display": "Body weight"
+            }
+          ],
+          "text": "Body weight"
+        },
+        "subject": { "reference": "Patient/hypertension-missing-bp" },
+        "effectiveDateTime": "2026-04-16T09:15:00-06:00",
+        "valueQuantity": {
+          "value": 94,
+          "unit": "kg",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/hypertension-missing-bp-weight-1"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "hypertension-missing-bp-weight-2",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "29463-7",
+              "display": "Body weight"
+            }
+          ],
+          "text": "Body weight"
+        },
+        "subject": { "reference": "Patient/hypertension-missing-bp" },
+        "effectiveDateTime": "2026-07-15T08:45:00-06:00",
+        "valueQuantity": {
+          "value": 92.5,
+          "unit": "kg",
+          "system": "http://unitsofmeasure.org",
+          "code": "kg"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/hypertension-missing-bp-weight-2"
+      }
+    },
+    {
+      "resource": {
         "resourceType": "Patient",
         "id": "hypertension-with-bp",
         "meta": {
@@ -112,6 +338,203 @@
       "request": {
         "method": "PUT",
         "url": "Condition/hypertension-with-bp-condition"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "hypertension-with-bp-type-2-diabetes",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "44054006",
+              "display": "Type 2 diabetes mellitus"
+            }
+          ],
+          "text": "Type 2 diabetes mellitus"
+        },
+        "subject": { "reference": "Patient/hypertension-with-bp" },
+        "onsetDateTime": "2018-11-02"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Condition/hypertension-with-bp-type-2-diabetes"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "hypertension-with-bp-observation-previous",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "Blood pressure panel"
+            }
+          ],
+          "text": "Blood pressure"
+        },
+        "subject": { "reference": "Patient/hypertension-with-bp" },
+        "effectiveDateTime": "2026-04-14T10:00:00-06:00",
+        "component": [
+          {
+            "code": {
+              "coding": [{ "system": "http://loinc.org", "code": "8480-6" }]
+            },
+            "valueQuantity": {
+              "value": 134,
+              "unit": "mmHg",
+              "system": "http://unitsofmeasure.org",
+              "code": "mm[Hg]"
+            }
+          },
+          {
+            "code": {
+              "coding": [{ "system": "http://loinc.org", "code": "8462-4" }]
+            },
+            "valueQuantity": {
+              "value": 82,
+              "unit": "mmHg",
+              "system": "http://unitsofmeasure.org",
+              "code": "mm[Hg]"
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/hypertension-with-bp-observation-previous"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "hypertension-with-bp-heart-rate-1",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ],
+          "text": "Heart rate"
+        },
+        "subject": { "reference": "Patient/hypertension-with-bp" },
+        "effectiveDateTime": "2026-04-14T10:00:00-06:00",
+        "valueQuantity": {
+          "value": 76,
+          "unit": "beats/minute",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/hypertension-with-bp-heart-rate-1"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "hypertension-with-bp-heart-rate-2",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ],
+          "text": "Heart rate"
+        },
+        "subject": { "reference": "Patient/hypertension-with-bp" },
+        "effectiveDateTime": "2026-07-15T09:00:00-06:00",
+        "valueQuantity": {
+          "value": 72,
+          "unit": "beats/minute",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/hypertension-with-bp-heart-rate-2"
       }
     },
     {
@@ -197,6 +620,232 @@
         "birthDate": "1982-01-27"
       },
       "request": { "method": "PUT", "url": "Patient/no-hypertension" }
+    },
+    {
+      "resource": {
+        "resourceType": "Condition",
+        "id": "no-hypertension-asthma",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "195967001",
+              "display": "Asthma"
+            }
+          ],
+          "text": "Asthma"
+        },
+        "subject": { "reference": "Patient/no-hypertension" },
+        "onsetDateTime": "2014-03-09"
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Condition/no-hypertension-asthma"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "no-hypertension-heart-rate-1",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ],
+          "text": "Heart rate"
+        },
+        "subject": { "reference": "Patient/no-hypertension" },
+        "effectiveDateTime": "2026-04-20T11:30:00-06:00",
+        "valueQuantity": {
+          "value": 68,
+          "unit": "beats/minute",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/no-hypertension-heart-rate-1"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "no-hypertension-heart-rate-2",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart rate"
+            }
+          ],
+          "text": "Heart rate"
+        },
+        "subject": { "reference": "Patient/no-hypertension" },
+        "effectiveDateTime": "2026-07-15T11:00:00-06:00",
+        "valueQuantity": {
+          "value": 70,
+          "unit": "beats/minute",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/no-hypertension-heart-rate-2"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "no-hypertension-oxygen-saturation-1",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2708-6",
+              "display": "Oxygen saturation in arterial blood"
+            }
+          ],
+          "text": "Oxygen saturation"
+        },
+        "subject": { "reference": "Patient/no-hypertension" },
+        "effectiveDateTime": "2026-04-20T11:30:00-06:00",
+        "valueQuantity": {
+          "value": 98,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org",
+          "code": "%"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/no-hypertension-oxygen-saturation-1"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "no-hypertension-oxygen-saturation-2",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.org/fhir/demo-dataset",
+              "code": "hypertension-cds-v1"
+            }
+          ]
+        },
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "vital-signs"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2708-6",
+              "display": "Oxygen saturation in arterial blood"
+            }
+          ],
+          "text": "Oxygen saturation"
+        },
+        "subject": { "reference": "Patient/no-hypertension" },
+        "effectiveDateTime": "2026-07-15T11:00:00-06:00",
+        "valueQuantity": {
+          "value": 97,
+          "unit": "%",
+          "system": "http://unitsofmeasure.org",
+          "code": "%"
+        }
+      },
+      "request": {
+        "method": "PUT",
+        "url": "Observation/no-hypertension-oxygen-saturation-2"
+      }
     }
   ]
 }
