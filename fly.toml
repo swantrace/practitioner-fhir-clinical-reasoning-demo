@@ -10,6 +10,7 @@ primary_region = 'yyz'
   dockerfile = 'Dockerfile'
 
 [env]
+  CDS_SERVICE_BASE_URL = 'http://127.0.0.1:8080/'
   CDS_USER_ID = 'Practitioner/demo'
   FHIR_BASE_URL = 'http://practitioner-hapi-fhir.internal:8080/fhir/'
   HAPI_PLAN_DEFINITION_ID = 'hypertension-bp-followup'
