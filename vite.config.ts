@@ -18,7 +18,7 @@ const productionServerMiddleware = async (
   return code;
 };
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   define: {
     // Keep deployment-provided values available in the SSR production bundle.
     'process.env': 'process.env',
@@ -33,4 +33,16 @@ export default defineConfig({
       entryContentBeforeHooks: [productionServerMiddleware],
     }),
   ],
-});
+  build:
+    mode === 'client'
+      ? {
+          rollupOptions: {
+            output: {
+              // Global browser enhancements are loaded on every page by the
+              // renderer, so keep their production URL stable.
+              entryFileNames: 'static/[name].js',
+            },
+          },
+        }
+      : undefined,
+}));
